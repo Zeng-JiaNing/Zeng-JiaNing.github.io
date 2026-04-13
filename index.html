@@ -628,12 +628,13 @@
  function batchGenerate(count) {
  const newPasswords = [];
  const year = new Date().getFullYear();
- const prefix = 'KO' + year;
- const startNum = PASSWORD_CONFIG.validPasswords.length + 1;
+ const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
  for (let i = 0; i < count; i++) {
- const num = startNum + i;
- const pwd = prefix + String(num).padStart(4, '0');
- if (!PASSWORD_CONFIG.validPasswords.includes(pwd)) newPasswords.push(pwd);
+ let newPwd;
+ do {
+ newPwd = Array.from({length: 16}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+ } while (PASSWORD_CONFIG.validPasswords.includes(newPwd));
+ newPasswords.push(newPwd);
  }
  PASSWORD_CONFIG.validPasswords.push.apply(PASSWORD_CONFIG.validPasswords, newPasswords);
  savePasswords();
@@ -808,12 +809,13 @@
  function batchGenerate(count) {
  const newPasswords = [];
  const year = new Date().getFullYear();
- const prefix = 'KO' + year;
- const startNum = PASSWORD_CONFIG.validPasswords.length + 1;
+ const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
  for (let i = 0; i < count; i++) {
- const num = startNum + i;
- const pwd = prefix + String(num).padStart(4, '0');
- if (!PASSWORD_CONFIG.validPasswords.includes(pwd)) newPasswords.push(pwd);
+ let newPwd;
+ do {
+ newPwd = Array.from({length: 16}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+ } while (PASSWORD_CONFIG.validPasswords.includes(newPwd));
+ newPasswords.push(newPwd);
  }
  PASSWORD_CONFIG.validPasswords.push.apply(PASSWORD_CONFIG.validPasswords, newPasswords);
  savePasswords();
