@@ -405,7 +405,7 @@
 </style>
 
 </head>
-<body>
+<body onload="initPasswords()">
 <div class="admin-entry" onclick="enterAdmin()" title="管理员入口">🔒</div>
  <div class="star-field" id="starField"></div>
  <div class="container">
@@ -538,6 +538,10 @@
  </div>
 
  <script>
+
+window.onload = function() {
+  initPasswords();
+};
  // 口令管理系统
  const PASSWORD_CONFIG = {
  validPasswords: [],
