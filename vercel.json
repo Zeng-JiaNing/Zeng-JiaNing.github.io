@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/passwords", "destination": "/api/passwords.js" },
+    { "source": "/api/validate", "destination": "/api/validate.js" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
