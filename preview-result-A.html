@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>结果页预览 - 方案A 杂志风</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+      min-height: 100vh;
+      padding: 40px 16px 60px;
+      color: #e8e0d5;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: #d4af37;
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .hero-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 20px rgba(212,175,55,0.3));
+      animation: bounceIn 0.8s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes bounceIn {
+      0%{opacity:0;transform:scale(0.3)}60%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}
+    }
+    .hero-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 26px;
+      color: #f5f0e8;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .hero-sub {
+      font-size: 12px;
+      color: #8a7a6a;
+      letter-spacing: 3px;
+      margin-bottom: 36px;
+    }
+    .divider {
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      margin: 0 auto 36px;
+    }
+
+    /* ===== 杂志风卡片 ===== */
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    /* 左则色条 */
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+    }
+    .card-pink::before  { background: linear-gradient(to bottom, #e89abf, #c47a9a); }
+    .card-blue::before  { background: linear-gradient(to bottom, #7ab8e8, #5a8ac4); }
+    .card-gold::before  { background: linear-gradient(to bottom, #e8c87a, #c4a45a); }
+    .card-purple::before{ background: linear-gradient(to bottom, #b87ae8, #8a5ac4); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .card-emoji { font-size: 22px; }
+    .card-title {
+      font-size: 15px;
+      color: #f5f0e8;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .card-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .card-bullets li {
+      font-size: 13px;
+      color: #9a8a7a;
+      line-height: 1.7;
+      padding-left: 16px;
+      position: relative;
+    }
+    .card-bullets li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: rgba(212,175,55,0.5);
+      font-size: 8px;
+      top: 5px;
+    }
+
+    .card-tip {
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 14px;
+      padding: 20px 18px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .card-tip .card-emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+    .card-tip p {
+      font-size: 13px;
+      color: #c8b89a;
+      line-height: 1.9;
+      font-style: italic;
+    }
+
+    .retry-btn {
+      display: block;
+      width: 100%;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      color: #d4af37;
+      font-size: 13px;
+      letter-spacing: 2px;
+      padding: 14px;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s;
+    }
+    .retry-btn:hover {
+      background: rgba(212,175,55,0.2);
+      box-shadow: 0 0 20px rgba(212,175,55,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div style="max-width:480px;margin:0 auto;">
+
+    <div style="text-align:center;">
+      <span class="badge">20年后的你 · 测试结果</span>
+      <div class="hero-icon">🌸</div>
+      <h1 class="hero-title">温柔而有力的追光者</h1>
+      <p class="hero-sub">内心有光，步伐坚定</p>
+      <div class="divider"></div>
+    </div>
+
+    <!-- 性格画像 -->
+    <div class="card card-pink">
+      <div class="card-header">
+        <span class="card-emoji">💗</span>
+        <span class="card-title">性格画像</span>
+      </div>
+      <ul class="card-bullets">
+        <li>外表温柔、内心有力量，善于照顾自己的情绪</li>
+        <li>懂得在适当的时候坚持，在适当的时候退让</li>
+        <li>内心有一团不灭的火，渴望成长与价值感</li>
+      </ul>
+    </div>
+
+    <!-- 理想生活 -->
+    <div class="card card-blue">
+      <div class="card-header">
+        <span class="card-emoji">☕</span>
+        <span class="card-title">理想生活</span>
+      </div>
+      <ul class="card-bullets">
+        <li>工作与生活平衡，下班后给自己独处时光</li>
+        <li>有一个温馨的小家，可能有宠物陪伴</li>
+        <li>每天煮咖啡、看老电影，把厨房布置得很温馨</li>
+      </ul>
+    </div>
+
+    <!-- 事业方向 -->
+    <div class="card card-gold">
+      <div class="card-header">
+        <span class="card-emoji">📈</span>
+        <span class="card-title">事业方向</span>
+      </div>
+      <ul class="card-bullets">
+        <li>稳步上升，成为中层管理者或领域专家</li>
+        <li>不会为晋升不择手段，能力和努力终会被看到</li>
+        <li>未来尝试新挑战：带新人、负责更大项目</li>
+      </ul>
+    </div>
+
+    <!-- 爱情观 -->
+    <div class="card card-purple">
+      <div class="card-header">
+        <span class="card-emoji">🌙</span>
+        <span class="card-title">爱情观</span>
+      </div>
+      <ul class="card-bullets">
+        <li>遇到一个温暖的人，建立一个小家庭</li>
+        <li>知道如何经营感情，也懂得保持自我</li>
+        <li>好的感情值得等待，不焦虑，内心从容</li>
+      </ul>
+    </div>
+
+    <!-- 暖心寄语 -->
+    <div class="card-tip">
+      <span class="card-emoji">✨</span>
+      <p>继续温柔与坚持的平衡，偶尔任性一下。<br>照顾好自己不是自私，是为了更好地爱别人。</p>
+    </div>
+
+    <button class="retry-btn" onclick="alert('重新测试')">↺ 重新测试</button>
+  </div>
+</body>
+</html>

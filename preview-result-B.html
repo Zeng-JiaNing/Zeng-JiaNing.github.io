@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>结果页预览 - 方案B 图鉴式简洁</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+      min-height: 100vh;
+      color: #e8e0d5;
+      padding-bottom: 60px;
+    }
+
+    /* ===== 图鉴风格 ===== */
+    .cover {
+      text-align: center;
+      padding: 50px 24px 40px;
+      position: relative;
+    }
+    .cover::after {
+      content: '';
+      display: block;
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
+      margin: 30px auto 0;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: rgba(212,175,55,0.7);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .cover-icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+      display: block;
+      animation: pop 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes pop {
+      0%{opacity:0;transform:scale(0.5)}100%{opacity:1;transform:scale(1)}
+    }
+    .cover-title {
+      font-size: 28px;
+      color: #f5f0e8;
+      letter-spacing: 6px;
+      margin-bottom: 8px;
+      font-weight: 300;
+    }
+    .cover-sub {
+      font-size: 13px;
+      color: #6a5a4a;
+      letter-spacing: 4px;
+    }
+
+    /* 标签区 */
+    .tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 24px;
+      margin-bottom: 40px;
+    }
+    .tag {
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.2);
+      color: rgba(212,175,55,0.8);
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* 图鉴项目 */
+    .guide-list {
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .guide-item {
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 22px 20px;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .guide-item:hover { background: rgba(255,255,255,0.05); }
+
+    .guide-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: rgba(212,175,55,0.6);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .guide-main {
+      font-size: 18px;
+      color: #f0ebe0;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .guide-desc {
+      font-size: 13px;
+      color: #7a6a5a;
+      line-height: 1.8;
+    }
+
+    /* 分隔装饰 */
+    .guide-divider {
+      text-align: center;
+      padding: 20px 24px 0;
+      color: rgba(212,175,55,0.3);
+      font-size: 12px;
+      letter-spacing: 6px;
+    }
+
+    /* 暖心卡片 */
+    .warm-card {
+      margin: 16px 24px 0;
+      background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(244,164,96,0.06));
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: 20px;
+      padding: 24px 22px;
+      text-align: center;
+    }
+    .warm-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+    .warm-text {
+      font-size: 14px;
+      color: #c8b898;
+      line-height: 2;
+      letter-spacing: 0.5px;
+    }
+
+    /* 操作按钮 */
+    .actions {
+      padding: 30px 24px 0;
+      display: flex;
+      gap: 12px;
+    }
+    .btn-retry {
+      flex: 1;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      color: #d4af37;
+      font-size: 13px;
+      letter-spacing: 2px;
+      padding: 14px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    .btn-retry:hover {
+      background: rgba(212,175,55,0.2);
+      box-shadow: 0 0 20px rgba(212,175,55,0.15);
+    }
+    .btn-share {
+      flex: 1;
+      background: rgba(200,100,150,0.1);
+      border: 1px solid rgba(200,100,150,0.3);
+      color: #d490aa;
+      font-size: 13px;
+      letter-spacing: 2px;
+      padding: 14px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    .btn-share:hover {
+      background: rgba(200,100,150,0.2);
+    }
+  </style>
+</head>
+<body>
+  <!-- 封面区 -->
+  <div class="cover">
+    <span class="cover-badge">Your Result · 20 Years Later</span>
+    <span class="cover-icon">🌸</span>
+    <h1 class="cover-title">温柔而有力的追光者</h1>
+    <p class="cover-sub">内心有光，步伐坚定</p>
+  </div>
+
+  <!-- 标签 -->
+  <div class="tags">
+    <span class="tag">温柔而有力量</span>
+    <span class="tag">平衡感满分</span>
+    <span class="tag">职场稳步上升</span>
+    <span class="tag">爱情从容</span>
+  </div>
+
+  <!-- 图鉴列表 -->
+  <div class="guide-list">
+
+    <div class="guide-item">
+      <div class="guide-label">性格</div>
+      <div class="guide-main">外表温柔，内心有力量</div>
+      <div class="guide-desc">既能照顾好自己的情绪，也懂得体谅他人。在坚持与退让之间找到平衡，内心有一团不灭的火。</div>
+    </div>
+
+    <div class="guide-divider">· · ·</div>
+
+    <div class="guide-item">
+      <div class="guide-label">生活</div>
+      <div class="guide-main">工作与生活，各有归处</div>
+      <div class="guide-desc">职场稳步上升，下班后有自己的小确幸。一杯咖啡、一部电影、一个温馨的小家。</div>
+    </div>
+
+    <div class="guide-divider">· · ·</div>
+
+    <div class="guide-item">
+      <div class="guide-label">事业</div>
+      <div class="guide-main">专业实力，被看见只是时间问题</div>
+      <div class="guide-desc">不会为晋升不择手段，但能力和努力终会被认可。未来会尝试更大的挑战。</div>
+    </div>
+
+    <div class="guide-divider">· · ·</div>
+
+    <div class="guide-item">
+      <div class="guide-label">感情</div>
+      <div class="guide-main">好的感情，值得等待</div>
+      <div class="guide-desc">遇到温暖的人，建立小家庭。懂得经营感情，也懂得在关系中保持完整的自我。</div>
+    </div>
+
+    <div class="guide-divider">· · ·</div>
+
+    <div class="guide-item">
+      <div class="guide-label">3年后</div>
+      <div class="guide-main">更加清楚自己要什么</div>
+      <div class="guide-desc">事业小高峰，感情稳定，会买房或换更好的居住环境，开始更关注健康。</div>
+    </div>
+
+  </div>
+
+  <!-- 暖心寄语 -->
+  <div class="warm-card">
+    <span class="warm-icon">🌟</span>
+    <p class="warm-text">
+      继续温柔与坚持的平衡<br>
+      偶尔任性，偶尔撒娇<br>
+      你不必一直坚强
+    </p>
+  </div>
+
+  <!-- 底部操作 -->
+  <div class="actions">
+    <button class="btn-retry" onclick="alert('重新测试')">↺ 重新测试</button>
+    <button class="btn-share" onclick="alert('分享结果')">♡ 收藏结果</button>
+  </div>
+</body>
+</html>
