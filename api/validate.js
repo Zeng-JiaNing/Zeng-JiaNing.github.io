@@ -77,6 +77,7 @@ export default async function handler(req, res) {
       data = JSON.parse(data);
     }
     
+    // 仅检查，不标记——标记操作在答完题后通过 /api/passwords 接口完成
     if (!data.validPasswords.includes(password)) {
       return res.status(200).json({ valid: false, message: '口令无效' });
     }
@@ -85,9 +86,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ valid: false, message: '口令已使用' });
     }
     
-    data.usedPasswords.push(password);
-    await redis.set('passwords', JSON.stringify(data));
-    
+    // ⚠️ 不在这里标记已用，避免中途退出导致口令被锁定
     return res.status(200).json({ valid: true, message: '验证成功' });
   } catch (error) {
     console.error('API错误:', error.message);

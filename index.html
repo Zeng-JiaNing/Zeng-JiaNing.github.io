@@ -958,14 +958,15 @@
     let score = 0;
     let currentResult = null;
     let currentStyleIndex = 0;
+    let currentPassword = ''; // 当前测试使用的口令
 
     // ============================================
     // 初始化
     // ============================================
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
       createStars();
-      initPasswords();
-      loadSharedPasswords();
+      // 异步从后端加载共享口令数据
+      await loadSharedPasswords();
     });
 
     function createStars() {
@@ -1037,14 +1038,8 @@
       }
 
       const pwd = password.trim();
-      const used = getUsedPasswords();
 
-      // 先检查本地是否已使用
-      if (used.includes(pwd)) {
-        return { valid: false, message: '该口令已被使用' };
-      }
-
-      // 尝试调用API验证（多设备共享）
+      // 完全依赖服务器验证（多设备共享的核心）
       try {
         const res = await fetch(`${API_BASE}/api/validate`, {
           method: 'POST',
@@ -1053,20 +1048,17 @@
         });
         const data = await res.json();
 
+        // 服务器验证通过后，更新本地缓存
         if (data.valid) {
-          // 验证通过，更新本地状态
           if (!PASSWORD_CONFIG.usedPasswords.includes(pwd)) {
             PASSWORD_CONFIG.usedPasswords.push(pwd);
           }
         }
         return data;
       } catch (e) {
-        console.warn('⚠️ API验证失败，尝试本地验证:', e);
-        // API失败时降级到本地验证
-        if (PASSWORD_CONFIG.validPasswords.includes(pwd)) {
-          return { valid: true, message: '' };
-        }
-        return { valid: false, message: '口令无效' };
+        console.error('⚠️ 服务器验证失败:', e);
+        alert('服务器连接失败，请检查网络后重试');
+        return { valid: false, message: '服务器连接失败' };
       }
     }
 
@@ -1328,13 +1320,14 @@
           return;
         }
 
-        // 标记为已使用
-        await markPasswordAsUsed(password);
+        // 验证通过即可（服务器已在 validatePassword 中标记为已用）
+        // 不需要重复调用 markPasswordAsUsed，避免重复标记
       }
 
       currentQ = 0;
       score = 0;
       currentResult = null;
+      currentPassword = PASSWORD_CONFIG.enablePasswordCheck ? password.trim() : '';
       showPage('quizPage');
       renderQuestion();
     }
@@ -1452,6 +1445,11 @@
     }
 
     function showResult() {
+      // 答完题后标记口令已用（不在验证时标记，避免中途退出被锁定）
+      if (currentPassword) {
+        markPasswordAsUsed(currentPassword);
+        currentPassword = '';
+      }
       showPage('resultPage');
 
       currentResult = getResultData();
