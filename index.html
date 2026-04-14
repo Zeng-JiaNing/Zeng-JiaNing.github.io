@@ -958,6 +958,7 @@
     let score = 0;
     let currentResult = null;
     let currentStyleIndex = 0;
+    let currentPassword = ''; // 当前测试使用的口令
 
     // ============================================
     // 初始化
@@ -1326,6 +1327,7 @@
       currentQ = 0;
       score = 0;
       currentResult = null;
+      currentPassword = PASSWORD_CONFIG.enablePasswordCheck ? password.trim() : '';
       showPage('quizPage');
       renderQuestion();
     }
@@ -1443,6 +1445,11 @@
     }
 
     function showResult() {
+      // 答完题后标记口令已用（不在验证时标记，避免中途退出被锁定）
+      if (currentPassword) {
+        markPasswordAsUsed(currentPassword);
+        currentPassword = '';
+      }
       showPage('resultPage');
 
       currentResult = getResultData();
