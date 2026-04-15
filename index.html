@@ -1092,11 +1092,11 @@
     // ============================================
     // 管理员功能
     // ============================================
-    function enterAdmin() {
+    async function enterAdmin() {
       const pwd = prompt('请输入管理员密码：');
       if (pwd === ADMIN_PASSWORD) {
+        await loadSharedPasswords();
         showPage('adminPage');
-        updateAdminStats();
       } else if (pwd !== null) {
         alert('密码错误');
       }
