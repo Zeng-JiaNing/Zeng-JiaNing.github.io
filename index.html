@@ -965,6 +965,7 @@
     // ============================================
     window.addEventListener('DOMContentLoaded', async () => {
       createStars();
+      initPasswords();
       // 异步从后端加载共享口令数据
       await loadSharedPasswords();
     });
@@ -1026,6 +1027,7 @@
         const data = await res.json();
         PASSWORD_CONFIG.validPasswords = data.validPasswords || [];
         PASSWORD_CONFIG.usedPasswords = data.usedPasswords || [];
+        updateAdminStats();
         console.log('✅ 已加载共享口令数据');
       } catch (e) {
         console.warn('⚠️ 加载共享数据失败，使用本地数据:', e);
@@ -1139,8 +1141,24 @@
       if (navigator.clipboard) {
         navigator.clipboard.writeText(pwd).then(() => {
           showToast('已复制：' + pwd);
+        }).catch(() => {
+          fallbackCopy(pwd);
         });
+      } else {
+        fallbackCopy(pwd);
       }
+    }
+
+    function fallbackCopy(pwd) {
+      const ta = document.createElement('textarea');
+      ta.value = pwd;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('已复制：' + pwd);
     }
 
     function batchGenerate(count) {
@@ -1344,7 +1362,7 @@
       document.getElementById('questionNum').textContent = currentQ + 1;
       document.getElementById('questionText').textContent = q.question;
       document.getElementById('currentQuestion').textContent = currentQ + 1;
-      document.getElementById('progressFill').style.width = (currentQ / 18 * 100) + '%';
+      document.getElementById('progressFill').style.width = ((currentQ + 1) / 18 * 100) + '%';
 
       const container = document.getElementById('optionsContainer');
       container.innerHTML = '';
