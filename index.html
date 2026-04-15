@@ -437,6 +437,24 @@
     .result-page {
       padding: 25px 20px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.35;
+      filter: blur(2px) saturate(0.8);
+      z-index: 0;
+      transition: background-image 0.6s ease;
+    }
+
+    .result-page > *:not(.result-bg) {
+      position: relative;
+      z-index: 1;
     }
 
     .result-icon {
@@ -465,6 +483,24 @@
       color: #8a7a6a;
       margin-bottom: 20px;
       letter-spacing: 2px;
+    }
+
+    .result-summary-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin: 0 auto 22px;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .result-summary {
+      font-size: 15px;
+      color: #f0ebe0;
+      line-height: 1.8;
+      letter-spacing: 1px;
+      margin: 0;
     }
 
     .result-card {
@@ -800,9 +836,13 @@
 
     <!-- 报告页 -->
     <div class="page result-page" id="resultPage">
+      <div class="result-bg" id="resultBg"></div>
       <div class="result-icon" id="resultIcon">🌸</div>
       <h2 class="result-title" id="resultTitle"></h2>
       <p class="result-subtitle" id="resultSubtitle"></p>
+      <div class="result-summary-card">
+        <p class="result-summary" id="resultSummary"></p>
+      </div>
       <div class="result-card" id="resultCard"></div>
       <p class="result-footer" id="resultFooter"></p>
       <button type="button" class="retry-btn" onclick="retryQuiz()">重新测试</button>
@@ -1034,6 +1074,7 @@
         updateAdminStats();
         console.log('✅ 已加载共享口令数据');
       } catch (e) {
+        // 服务器请求失败时，保留本地已有数据，避免统计归零
         console.warn('⚠️ 加载共享数据失败，使用本地数据:', e);
       }
     }
@@ -1460,33 +1501,35 @@
     // ============================================
     function getResultData() {
       if (score <= 12) {
-        return { type: 'light', icon: '🦋', title: '轻盈自在的灵魂', subtitle: '你的人生，像一首温柔的小诗', tagline: '轻盈不是逃避，而是选择了最适合自己的飞翔方式', keyPoint: '不争不抢，内心温柔而独立' };
+        return { type: 'light', icon: '🦋', title: '轻盈自在的灵魂', subtitle: '你的人生，像一首温柔的小诗', tagline: '轻盈不是逃避，而是选择了最适合自己的飞翔方式', keyPoint: '不争不抢，内心温柔而独立', summary: '你是一个轻盈自在的人，不被世俗框架束缚，在自己的节奏里活出了最舒适的样子。', bgSeed: '1082' };
       } else if (score <= 24) {
-        return { type: 'warm', icon: '🌸', title: '温柔而有力的追光者', subtitle: '你的人生，像一部温暖的电影', tagline: '追光的人，终会光芒万丈', keyPoint: '外表温柔，内心有力量' };
+        return { type: 'warm', icon: '🌸', title: '温柔而有力的追光者', subtitle: '你的人生，像一部温暖的电影', tagline: '追光的人，终会光芒万丈', keyPoint: '外表温柔，内心有力量', summary: '你既温柔又坚韧，在追求梦想的路上稳步前行，光芒温和却持久。', bgSeed: '1074' };
       } else if (score <= 36) {
-        return { type: 'vibrant', icon: '🌟', title: '热烈而自由的灵魂', subtitle: '你的人生，像一场绚烂的冒险', tagline: '愿你历尽千帆，归来仍是少年', keyPoint: '敢想敢做，永保热爱' };
+        return { type: 'vibrant', icon: '🌟', title: '热烈而自由的灵魂', subtitle: '你的人生，像一场绚烂的冒险', tagline: '愿你历尽千帆，归来仍是少年', keyPoint: '敢想敢做，永保热爱', summary: '你的灵魂热烈而自由，不被定义的人生才是你的追求，世界因你而精彩。', bgSeed: '1040' };
       } else if (score <= 42) {
-        return { type: 'romantic', icon: '🎭', title: '文艺浪漫的诗意人生', subtitle: '你的人生，像一幅流动的油画', tagline: '浪漫不是幻想，而是将诗情画意融入平凡', keyPoint: '心怀诗意，热爱与美' };
+        return { type: 'romantic', icon: '🎭', title: '文艺浪漫的诗意人生', subtitle: '你的人生，像一幅流动的油画', tagline: '浪漫不是幻想，而是将诗情画意融入平凡', keyPoint: '心怀诗意，热爱与美', summary: '你把生活过成了一首诗，在平凡中发现美，在琐碎中创造诗意浪漫。', bgSeed: '1067' };
       } else {
-        return { type: 'wise', icon: '💎', title: '理性智慧的清醒人生', subtitle: '你的人生，像一潭深邃的湖水', tagline: '智慧是历经风雨后的从容与通透', keyPoint: '清醒笃定，稳中有进' };
+        return { type: 'wise', icon: '💎', title: '理性智慧的清醒人生', subtitle: '你的人生，像一潭深邃的湖水', tagline: '智慧是历经风雨后的从容与通透', keyPoint: '清醒笃定，稳中有进', summary: '你活得很清醒，不焦虑不盲从，用智慧经营人生，每一步都走得踏实有力。', bgSeed: '1016' };
       }
     }
 
     function showResult() {
-      // 答完题后标记口令已用（不在验证时标记，避免中途退出被锁定）
-      if (currentPassword) {
-        markPasswordAsUsed(currentPassword);
-        currentPassword = '';
-      }
+      // 口令已在 validatePassword 时由服务器标记为已用，无需重复操作
+      currentPassword = '';
       showPage('resultPage');
 
       currentResult = getResultData();
       const styles = cardStyles[currentResult.type];
       currentStyleIndex = Math.floor(Math.random() * styles.length);
 
+      // 设置每种类型的专属背景图
+      const bgEl = document.getElementById('resultBg');
+      bgEl.style.backgroundImage = `url(https://picsum.photos/seed/${currentResult.bgSeed}/800/600)`;
+
       document.getElementById('resultIcon').textContent = currentResult.icon;
       document.getElementById('resultTitle').textContent = currentResult.title;
       document.getElementById('resultSubtitle').textContent = currentResult.subtitle;
+      document.getElementById('resultSummary').textContent = currentResult.summary;
       document.getElementById('resultFooter').textContent = `—— ${currentResult.tagline} ——`;
       document.getElementById('resultCard').innerHTML = getResultSectionsHTML();
     }
