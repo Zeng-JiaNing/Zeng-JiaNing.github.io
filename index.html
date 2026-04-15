@@ -771,7 +771,7 @@
           <input type="text" class="password-input" id="passwordInput" placeholder="输入口令" maxlength="20" autocomplete="off">
           <p class="password-hint">每个口令仅限使用一次</p>
         </div>
-        <button class="enter-btn" onclick="startQuiz()">解锁人生剧本</button>
+        <button type="button" class="enter-btn" id="startBtn" onclick="startQuiz()">解锁人生剧本</button>
         <p class="home-note">✨ 准备好遇见未来的自己了吗？</p>
       </div>
     </div>
@@ -805,7 +805,7 @@
       <p class="result-subtitle" id="resultSubtitle"></p>
       <div class="result-card" id="resultCard"></div>
       <p class="result-footer" id="resultFooter"></p>
-      <button class="retry-btn" onclick="retryQuiz()">重新测试</button>
+      <button type="button" class="retry-btn" onclick="retryQuiz()">重新测试</button>
     </div>
 
     <!-- 管理员页面 -->
@@ -835,14 +835,14 @@
       <div class="admin-card">
         <p class="admin-card-title">🪄 批量生成口令</p>
         <div class="btn-group">
-          <button class="btn" onclick="batchGenerate(10)">生成10个</button>
-          <button class="btn" onclick="batchGenerate(50)">生成50个</button>
-          <button class="btn" onclick="batchGenerate(100)">生成100个</button>
-          <button class="btn" onclick="batchGenerate(200)">生成200个</button>
+          <button type="button" class="btn" onclick="batchGenerate(10)">生成10个</button>
+          <button type="button" class="btn" onclick="batchGenerate(50)">生成50个</button>
+          <button type="button" class="btn" onclick="batchGenerate(100)">生成100个</button>
+          <button type="button" class="btn" onclick="batchGenerate(200)">生成200个</button>
         </div>
         <div class="input-row">
           <input type="number" class="admin-input" id="customGenCount" placeholder="自定义数量" min="1" max="1000">
-          <button class="btn btn-primary" onclick="batchGenerateCustom()">生成</button>
+          <button type="button" class="btn btn-primary" onclick="batchGenerateCustom()">生成</button>
         </div>
       </div>
 
@@ -850,11 +850,11 @@
       <div class="admin-card">
         <p class="admin-card-title">📦 导入 / 导出</p>
         <div class="btn-group">
-          <button class="btn" onclick="exportUnused()">📥 导出未使用</button>
-          <button class="btn" onclick="exportAll()">📥 导出全部</button>
+          <button type="button" class="btn" onclick="exportUnused()">📥 导出未使用</button>
+          <button type="button" class="btn" onclick="exportAll()">📥 导出全部</button>
         </div>
         <input type="file" id="importFile" accept=".txt,.csv" onchange="importPasswords(event)" style="display: none;">
-        <button class="btn btn-full" onclick="document.getElementById('importFile').click()">📤 从文件导入</button>
+        <button type="button" class="btn btn-full" onclick="document.getElementById('importFile').click()">📤 从文件导入</button>
         <p class="admin-hint">导出为TXT文件，每行一个口令。导入会自动去重。</p>
       </div>
 
@@ -863,7 +863,7 @@
         <p class="admin-card-title">✏️ 手动添加</p>
         <div class="input-row">
           <input type="text" class="admin-input" id="newPasswordInput" placeholder="输入口令" maxlength="20">
-          <button class="btn btn-primary" onclick="addNewPassword()">添加</button>
+          <button type="button" class="btn btn-primary" onclick="addNewPassword()">添加</button>
         </div>
       </div>
 
@@ -877,10 +877,10 @@
 
       <!-- 底部操作 -->
       <div class="btn-group" style="margin-bottom: 20px;">
-        <button class="btn btn-danger btn-half" onclick="resetUsedPasswords()">🗑️ 清空已用记录</button>
-        <button class="btn btn-danger btn-half" onclick="clearAllPasswords()">💣 清空全部口令</button>
+        <button type="button" class="btn btn-danger btn-half" onclick="resetUsedPasswords()">🗑️ 清空已用记录</button>
+        <button type="button" class="btn btn-danger btn-half" onclick="clearAllPasswords()">💣 清空全部口令</button>
       </div>
-      <button class="back-btn" onclick="showPage('homePage')">← 返回首页</button>
+      <button type="button" class="back-btn" onclick="showPage('homePage')">← 返回首页</button>
     </div>
   </div>
 
@@ -1300,36 +1300,42 @@
     // 答题流程
     // ============================================
     async function startQuiz() {
-      if (PASSWORD_CONFIG.enablePasswordCheck) {
-        const passwordInput = document.getElementById('passwordInput');
-        const password = passwordInput.value.trim();
+      // 防止重复点击
+      const btn = document.getElementById('startBtn');
+      if (btn.disabled) return;
+      btn.disabled = true;
 
-        if (!password) {
-          passwordInput.classList.add('error');
-          setTimeout(() => passwordInput.classList.remove('error'), 500);
-          alert('请输入访问口令');
-          return;
+      try {
+        if (PASSWORD_CONFIG.enablePasswordCheck) {
+          const passwordInput = document.getElementById('passwordInput');
+          const password = passwordInput.value.trim();
+
+          if (!password) {
+            passwordInput.classList.add('error');
+            setTimeout(() => passwordInput.classList.remove('error'), 500);
+            alert('请输入访问口令');
+            return;
+          }
+
+          const validation = await validatePassword(password);
+
+          if (!validation.valid) {
+            passwordInput.classList.add('error');
+            setTimeout(() => passwordInput.classList.remove('error'), 500);
+            alert(validation.message);
+            return;
+          }
         }
 
-        const validation = await validatePassword(password);
-
-        if (!validation.valid) {
-          passwordInput.classList.add('error');
-          setTimeout(() => passwordInput.classList.remove('error'), 500);
-          alert(validation.message);
-          return;
-        }
-
-        // 验证通过即可（服务器已在 validatePassword 中标记为已用）
-        // 不需要重复调用 markPasswordAsUsed，避免重复标记
+        currentQ = 0;
+        score = 0;
+        currentResult = null;
+        currentPassword = PASSWORD_CONFIG.enablePasswordCheck ? document.getElementById('passwordInput').value.trim() : '';
+        showPage('quizPage');
+        renderQuestion();
+      } finally {
+        btn.disabled = false;
       }
-
-      currentQ = 0;
-      score = 0;
-      currentResult = null;
-      currentPassword = PASSWORD_CONFIG.enablePasswordCheck ? password.trim() : '';
-      showPage('quizPage');
-      renderQuestion();
     }
 
     function renderQuestion() {
