@@ -1010,6 +1010,10 @@
     }
 
     function getUsedPasswords() {
+      // 优先使用内存中的共享数据（从服务器同步的）
+      if (PASSWORD_CONFIG.usedPasswords && PASSWORD_CONFIG.usedPasswords.length > 0) {
+        return PASSWORD_CONFIG.usedPasswords;
+      }
       try {
         const used = localStorage.getItem(PASSWORD_CONFIG.usedPasswordsKey);
         return used ? JSON.parse(used) : [];
