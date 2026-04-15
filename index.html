@@ -446,10 +446,10 @@
       inset: 0;
       background-size: cover;
       background-position: center;
-      opacity: 0.35;
-      filter: blur(2px) saturate(0.8);
+      opacity: 0.25;
+      filter: blur(3px) saturate(0.7);
       z-index: 0;
-      transition: background-image 0.6s ease;
+      transition: background-image 0.8s ease;
     }
 
     .result-page > *:not(.result-bg) {
@@ -486,49 +486,67 @@
     }
 
     .result-summary-card {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 16px;
-      padding: 20px 22px;
-      margin: 0 auto 22px;
-      max-width: 500px;
+      background: rgba(255, 255, 255, 0.10);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      padding: 22px 24px;
+      margin: 0 auto 20px;
+      max-width: 480px;
       text-align: left;
     }
 
     .result-summary {
       font-size: 15px;
-      color: #f0ebe0;
-      line-height: 1.8;
-      letter-spacing: 1px;
+      color: #f5f0e8;
+      line-height: 1.9;
+      letter-spacing: 0.5px;
       margin: 0;
     }
 
     .result-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 24px 20px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 480px;
       text-align: left;
-      margin-bottom: 18px;
     }
 
     .result-section {
-      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .result-section:last-child { margin-bottom: 0; }
+    .result-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .result-section:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
 
     .section-title {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--star-gold);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-weight: 600;
+      letter-spacing: 1px;
     }
 
     .section-content {
       font-size: 13px;
-      color: #9a8a7a;
-      line-height: 1.8;
+      color: rgba(245, 240, 232, 0.80);
+      line-height: 1.85;
     }
 
     .result-footer {
