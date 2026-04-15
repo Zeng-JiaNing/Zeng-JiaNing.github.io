@@ -771,7 +771,7 @@
           <input type="text" class="password-input" id="passwordInput" placeholder="输入口令" maxlength="20" autocomplete="off">
           <p class="password-hint">每个口令仅限使用一次</p>
         </div>
-        <button class="enter-btn" type="button" onclick="startQuiz()">解锁人生剧本</button>
+        <button class="enter-btn" onclick="startQuiz()">解锁人生剧本</button>
         <p class="home-note">✨ 准备好遇见未来的自己了吗？</p>
       </div>
     </div>
@@ -1062,18 +1062,20 @@
       }
     }
 
-    // 标记已用（仅在答完题时调用，不在验证时调用）
     async function markPasswordAsUsed(password) {
       if (!PASSWORD_CONFIG.enablePasswordCheck) return;
+
       const pwd = password.trim();
 
-      // 更新本地缓存
-      if (!PASSWORD_CONFIG.usedPasswords.includes(pwd)) {
-        PASSWORD_CONFIG.usedPasswords.push(pwd);
-        savePasswords();
+      // 更新本地
+      const used = getUsedPasswords();
+      if (!used.includes(pwd)) {
+        used.push(pwd);
+        localStorage.setItem(PASSWORD_CONFIG.usedPasswordsKey, JSON.stringify(used));
+        PASSWORD_CONFIG.usedPasswords = used;
       }
 
-      // 同步到API（忽略失败，不影响用户体验）
+      // 同步到API
       try {
         await fetch(`${API_BASE}/api/passwords`, {
           method: 'POST',
@@ -1319,25 +1321,15 @@
         }
 
         // 验证通过即可（服务器已在 validatePassword 中标记为已用）
-      // 不需要重复调用 markPasswordAsUsed，避免重复标记
+        // 不需要重复调用 markPasswordAsUsed，避免重复标记
+      }
 
-      // 显示加载状态，防止用户重复点击
-      const btn = document.querySelector('.enter-btn');
-      const originalText = btn.textContent;
-      btn.textContent = '🔮 正在解锁...';
-      btn.disabled = true;
-
-      // 短暂延迟让用户看到反馈
-      setTimeout(() => {
-        currentQ = 0;
-        score = 0;
-        currentResult = null;
-        currentPassword = PASSWORD_CONFIG.enablePasswordCheck ? password.trim() : '';
-        btn.textContent = originalText;
-        btn.disabled = false;
-        showPage('quizPage');
-        renderQuestion();
-      }, 300);
+      currentQ = 0;
+      score = 0;
+      currentResult = null;
+      currentPassword = PASSWORD_CONFIG.enablePasswordCheck ? password.trim() : '';
+      showPage('quizPage');
+      renderQuestion();
     }
 
     function renderQuestion() {
