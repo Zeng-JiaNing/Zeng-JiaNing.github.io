@@ -487,23 +487,25 @@
     }
 
     .result-summary-card {
-      background: rgba(255, 255, 255, 0.10);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 18px;
-      padding: 22px 24px;
-      margin: 0 auto 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 26px 28px;
+      margin: 0 auto 22px;
       max-width: 480px;
       text-align: left;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     }
 
     .result-summary {
-      font-size: 15px;
-      color: #f5f0e8;
-      line-height: 1.9;
-      letter-spacing: 0.5px;
+      font-size: 17px;
+      color: #fff;
+      line-height: 1.8;
+      letter-spacing: 0.8px;
       margin: 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .result-card {
@@ -1520,15 +1522,15 @@
     // ============================================
     function getResultData() {
       if (score <= 12) {
-        return { type: 'light', icon: '🦋', title: '轻盈自在的灵魂', subtitle: '你的人生，像一首温柔的小诗', tagline: '轻盈不是逃避，而是选择了最适合自己的飞翔方式', keyPoint: '不争不抢，内心温柔而独立', summary: '你是一个轻盈自在的人，不被世俗框架束缚，在自己的节奏里活出了最舒适的样子。', bgSeed: '1082' };
+        return { type: 'light', icon: '🦋', title: '轻盈自在的灵魂', subtitle: '你的人生，像一首温柔的小诗', tagline: '轻盈不是逃避，而是选择了最适合自己的飞翔方式', keyPoint: '不争不抢，内心温柔而独立', summary: '你是一个轻盈自在的人，不被世俗框架束缚，在自己的节奏里活出了最舒适的样子。', bgKeyword: 'nature,soft' };
       } else if (score <= 24) {
-        return { type: 'warm', icon: '🌸', title: '温柔而有力的追光者', subtitle: '你的人生，像一部温暖的电影', tagline: '追光的人，终会光芒万丈', keyPoint: '外表温柔，内心有力量', summary: '你既温柔又坚韧，在追求梦想的路上稳步前行，光芒温和却持久。', bgSeed: '1074' };
+        return { type: 'warm', icon: '🌸', title: '温柔而有力的追光者', subtitle: '你的人生，像一部温暖的电影', tagline: '追光的人，终会光芒万丈', keyPoint: '外表温柔，内心有力量', summary: '你既温柔又坚韧，在追求梦想的路上稳步前行，光芒温和却持久。', bgKeyword: 'warm,sunset' };
       } else if (score <= 36) {
-        return { type: 'vibrant', icon: '🌟', title: '热烈而自由的灵魂', subtitle: '你的人生，像一场绚烂的冒险', tagline: '愿你历尽千帆，归来仍是少年', keyPoint: '敢想敢做，永保热爱', summary: '你的灵魂热烈而自由，不被定义的人生才是你的追求，世界因你而精彩。', bgSeed: '1040' };
+        return { type: 'vibrant', icon: '🌟', title: '热烈而自由的灵魂', subtitle: '你的人生，像一场绚烂的冒险', tagline: '愿你历尽千帆，归来仍是少年', keyPoint: '敢想敢做，永保热爱', summary: '你的灵魂热烈而自由，不被定义的人生才是你的追求，世界因你而精彩。', bgKeyword: 'colorful,adventure' };
       } else if (score <= 42) {
-        return { type: 'romantic', icon: '🎭', title: '文艺浪漫的诗意人生', subtitle: '你的人生，像一幅流动的油画', tagline: '浪漫不是幻想，而是将诗情画意融入平凡', keyPoint: '心怀诗意，热爱与美', summary: '你把生活过成了一首诗，在平凡中发现美，在琐碎中创造诗意浪漫。', bgSeed: '1067' };
+        return { type: 'romantic', icon: '🎭', title: '文艺浪漫的诗意人生', subtitle: '你的人生，像一幅流动的油画', tagline: '浪漫不是幻想，而是将诗情画意融入平凡', keyPoint: '心怀诗意，热爱与美', summary: '你把生活过成了一首诗，在平凡中发现美，在琐碎中创造诗意浪漫。', bgKeyword: 'art,painting' };
       } else {
-        return { type: 'wise', icon: '💎', title: '理性智慧的清醒人生', subtitle: '你的人生，像一潭深邃的湖水', tagline: '智慧是历经风雨后的从容与通透', keyPoint: '清醒笃定，稳中有进', summary: '你活得很清醒，不焦虑不盲从，用智慧经营人生，每一步都走得踏实有力。', bgSeed: '1016' };
+        return { type: 'wise', icon: '💎', title: '理性智慧的清醒人生', subtitle: '你的人生，像一潭深邃的湖水', tagline: '智慧是历经风雨后的从容与通透', keyPoint: '清醒笃定，稳中有进', summary: '你活得很清醒，不焦虑不盲从，用智慧经营人生，每一步都走得踏实有力。', bgKeyword: 'minimal,calm' };
       }
     }
 
@@ -1541,9 +1543,10 @@
       const styles = cardStyles[currentResult.type];
       currentStyleIndex = Math.floor(Math.random() * styles.length);
 
-      // 设置每种类型的专属背景图
+      // 设置每种类型的专属背景图（女性主题）
       const bgEl = document.getElementById('resultBg');
-      bgEl.style.backgroundImage = `url(https://picsum.photos/seed/${currentResult.bgSeed}/800/600)`;
+      const keywords = currentResult.bgKeyword;
+      bgEl.style.backgroundImage = `url(https://loremflickr.com/800/600/${keywords},woman,girl/all?random=${Date.now()})`;
 
       document.getElementById('resultIcon').textContent = currentResult.icon;
       document.getElementById('resultTitle').textContent = currentResult.title;
@@ -1554,6 +1557,26 @@
     }
 
     function getResultSectionsHTML() {
+      // 关键词高亮映射
+      const keywordsMap = {
+        light: ['轻盈', '自在', '温柔', '独立', '宁静', '成熟', '小确幸', '细腻', '舒适', '慢节奏'],
+        warm: ['温柔', '力量', '成长', '光芒', '温暖', '平衡', '坚定', '成熟', '稳步', '绽放'],
+        vibrant: ['热烈', '自由', '洒脱', '冒险', '热情', '绚烂', '精彩', '勇气', '闯荡', '挑战'],
+        romantic: ['浪漫', '诗意', '艺术', '美好', '文艺', '细腻', '感性', '创作', '独特', '梦想'],
+        wise: ['智慧', '清醒', '理性', '通透', '笃定', '沉稳', '格局', '洞察', '驾驭', '从容']
+      };
+
+      const typeKeywords = keywordsMap[currentResult.type] || [];
+
+      function highlightText(text) {
+        let result = text;
+        typeKeywords.forEach(word => {
+          const regex = new RegExp(`(${word})`, 'g');
+          result = result.replace(regex, '<strong style="color:#d4af37;font-weight:600">$1</strong>');
+        });
+        return result;
+      }
+
       const sections = [
         { title: '性格画像', content: getSectionContent('personality') },
         { title: '理想生活', content: getSectionContent('life') },
@@ -1568,7 +1591,7 @@
       return sections.map(s => `
         <div class="result-section">
           <h3 class="section-title">✧ ${s.title}</h3>
-          <p class="section-content">${s.content}</p>
+          <p class="section-content">${highlightText(s.content)}</p>
         </div>
       `).join('');
     }
