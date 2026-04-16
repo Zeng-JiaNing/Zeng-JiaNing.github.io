@@ -500,12 +500,21 @@
     }
 
     .result-summary {
-      font-size: 17px;
-      color: #fff;
-      line-height: 1.8;
-      letter-spacing: 0.8px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.9;
+      letter-spacing: 0.5px;
       margin: 0;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-label {
+      font-size: 20px;
+      font-weight: 600;
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 10px 0;
+      letter-spacing: 2px;
     }
 
     .result-card {
@@ -550,6 +559,15 @@
       font-size: 13px;
       color: rgba(245, 240, 232, 0.80);
       line-height: 1.85;
+      text-indent: 2em;
+    }
+
+    .section-summary {
+      font-size: 13px;
+      font-weight: 600;
+      color: #d4af37;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
     }
 
     .result-footer {
@@ -862,6 +880,7 @@
       <h2 class="result-title" id="resultTitle"></h2>
       <p class="result-subtitle" id="resultSubtitle"></p>
       <div class="result-summary-card">
+        <p class="result-label" id="resultTitle2"></p>
         <p class="result-summary" id="resultSummary"></p>
       </div>
       <div class="result-card" id="resultCard"></div>
@@ -1522,15 +1541,15 @@
     // ============================================
     function getResultData() {
       if (score <= 12) {
-        return { type: 'light', icon: '🦋', title: '轻盈自在的灵魂', subtitle: '你的人生，像一首温柔的小诗', tagline: '轻盈不是逃避，而是选择了最适合自己的飞翔方式', keyPoint: '不争不抢，内心温柔而独立', summary: '你是一个轻盈自在的人，不被世俗框架束缚，在自己的节奏里活出了最舒适的样子。', bgKeyword: 'nature,soft' };
+        return { type: 'light', icon: '🦋', label: '轻盈自在者', title: '轻盈自在的灵魂', subtitle: '你的人生，像一首温柔的小诗', tagline: '轻盈不是逃避，而是选择了最适合自己的飞翔方式', keyPoint: '不争不抢，内心温柔而独立', summary: '你是一个轻盈自在的人，不被世俗框架束缚，在自己的节奏里活出了最舒适的样子。', bgKeyword: 'nature,soft' };
       } else if (score <= 24) {
-        return { type: 'warm', icon: '🌸', title: '温柔而有力的追光者', subtitle: '你的人生，像一部温暖的电影', tagline: '追光的人，终会光芒万丈', keyPoint: '外表温柔，内心有力量', summary: '你既温柔又坚韧，在追求梦想的路上稳步前行，光芒温和却持久。', bgKeyword: 'warm,sunset' };
+        return { type: 'warm', icon: '🌸', label: '温柔力量者', title: '温柔而有力的追光者', subtitle: '你的人生，像一部温暖的电影', tagline: '追光的人，终会光芒万丈', keyPoint: '外表温柔，内心有力量', summary: '你既温柔又坚韧，在追求梦想的路上稳步前行，光芒温和却持久。', bgKeyword: 'warm,sunset' };
       } else if (score <= 36) {
-        return { type: 'vibrant', icon: '🌟', title: '热烈而自由的灵魂', subtitle: '你的人生，像一场绚烂的冒险', tagline: '愿你历尽千帆，归来仍是少年', keyPoint: '敢想敢做，永保热爱', summary: '你的灵魂热烈而自由，不被定义的人生才是你的追求，世界因你而精彩。', bgKeyword: 'colorful,adventure' };
+        return { type: 'vibrant', icon: '🌟', label: '热烈自由者', title: '热烈而自由的灵魂', subtitle: '你的人生，像一场绚烂的冒险', tagline: '愿你历尽千帆，归来仍是少年', keyPoint: '敢想敢做，永保热爱', summary: '你的灵魂热烈而自由，不被定义的人生才是你的追求，世界因你而精彩。', bgKeyword: 'colorful,adventure' };
       } else if (score <= 42) {
-        return { type: 'romantic', icon: '🎭', title: '文艺浪漫的诗意人生', subtitle: '你的人生，像一幅流动的油画', tagline: '浪漫不是幻想，而是将诗情画意融入平凡', keyPoint: '心怀诗意，热爱与美', summary: '你把生活过成了一首诗，在平凡中发现美，在琐碎中创造诗意浪漫。', bgKeyword: 'art,painting' };
+        return { type: 'romantic', icon: '🎭', label: '诗意浪漫者', title: '文艺浪漫的诗意人生', subtitle: '你的人生，像一幅流动的油画', tagline: '浪漫不是幻想，而是将诗情画意融入平凡', keyPoint: '心怀诗意，热爱与美', summary: '你把生活过成了一首诗，在平凡中发现美，在琐碎中创造诗意浪漫。', bgKeyword: 'art,painting' };
       } else {
-        return { type: 'wise', icon: '💎', title: '理性智慧的清醒人生', subtitle: '你的人生，像一潭深邃的湖水', tagline: '智慧是历经风雨后的从容与通透', keyPoint: '清醒笃定，稳中有进', summary: '你活得很清醒，不焦虑不盲从，用智慧经营人生，每一步都走得踏实有力。', bgKeyword: 'minimal,calm' };
+        return { type: 'wise', icon: '💎', label: '清醒智慧者', title: '理性智慧的清醒人生', subtitle: '你的人生，像一潭深邃的湖水', tagline: '智慧是历经风雨后的从容与通透', keyPoint: '清醒笃定，稳中有进', summary: '你活得很清醒，不焦虑不盲从，用智慧经营人生，每一步都走得踏实有力。', bgKeyword: 'minimal,calm' };
       }
     }
 
@@ -1550,6 +1569,7 @@
 
       document.getElementById('resultIcon').textContent = currentResult.icon;
       document.getElementById('resultTitle').textContent = currentResult.title;
+      document.getElementById('resultTitle2').textContent = '✦ ' + currentResult.label + ' ✦';
       document.getElementById('resultSubtitle').textContent = currentResult.subtitle;
       document.getElementById('resultSummary').textContent = currentResult.summary;
       document.getElementById('resultFooter').textContent = `—— ${currentResult.tagline} ——`;
@@ -1588,12 +1608,18 @@
         { title: '暖心寄语', content: getSectionContent('advice') }
       ];
 
-      return sections.map(s => `
+      return sections.map(s => {
+        // 提取第一句作为总结
+        const firstSep = s.content.indexOf('。');
+        const summary = firstSep > 0 ? s.content.substring(0, firstSep + 1) : '';
+        const rest = firstSep > 0 ? s.content.substring(firstSep + 1) : s.content;
+        return `
         <div class="result-section">
           <h3 class="section-title">✧ ${s.title}</h3>
-          <p class="section-content">${highlightText(s.content)}</p>
+          ${summary ? `<p class="section-summary">◈ ${highlightText(summary)}</p>` : ''}
+          <p class="section-content">${highlightText(rest)}</p>
         </div>
-      `).join('');
+      `}).join('');
     }
 
     function getSectionContent(type) {
