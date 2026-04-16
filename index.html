@@ -1541,15 +1541,15 @@
     // ============================================
     function getResultData() {
       if (score <= 12) {
-        return { type: 'light', icon: '🦋', label: '轻盈自在者', title: '轻盈自在的灵魂', subtitle: '你的人生，像一首温柔的小诗', tagline: '轻盈不是逃避，而是选择了最适合自己的飞翔方式', keyPoint: '不争不抢，内心温柔而独立', summary: '你是一个轻盈自在的人，不被世俗框架束缚，在自己的节奏里活出了最舒适的样子。', bgKeyword: 'nature,soft' };
+        return { type: 'light', icon: '🦋', label: '轻盈自在者', title: '轻盈自在的灵魂', subtitle: '你的人生，像一首温柔的小诗', tagline: '轻盈不是逃避，而是选择了最适合自己的飞翔方式', keyPoint: '不争不抢，内心温柔而独立', summary: '你是一个轻盈自在的人，不被世俗框架束缚，在自己的节奏里活出了最舒适的样子。' };
       } else if (score <= 24) {
-        return { type: 'warm', icon: '🌸', label: '温柔力量者', title: '温柔而有力的追光者', subtitle: '你的人生，像一部温暖的电影', tagline: '追光的人，终会光芒万丈', keyPoint: '外表温柔，内心有力量', summary: '你既温柔又坚韧，在追求梦想的路上稳步前行，光芒温和却持久。', bgKeyword: 'warm,sunset' };
+        return { type: 'warm', icon: '🌸', label: '温柔力量者', title: '温柔而有力的追光者', subtitle: '你的人生，像一部温暖的电影', tagline: '追光的人，终会光芒万丈', keyPoint: '外表温柔，内心有力量', summary: '你既温柔又坚韧，在追求梦想的路上稳步前行，光芒温和却持久。' };
       } else if (score <= 36) {
-        return { type: 'vibrant', icon: '🌟', label: '热烈自由者', title: '热烈而自由的灵魂', subtitle: '你的人生，像一场绚烂的冒险', tagline: '愿你历尽千帆，归来仍是少年', keyPoint: '敢想敢做，永保热爱', summary: '你的灵魂热烈而自由，不被定义的人生才是你的追求，世界因你而精彩。', bgKeyword: 'colorful,adventure' };
+        return { type: 'vibrant', icon: '🌟', label: '热烈自由者', title: '热烈而自由的灵魂', subtitle: '你的人生，像一场绚烂的冒险', tagline: '愿你历尽千帆，归来仍是少年', keyPoint: '敢想敢做，永保热爱', summary: '你的灵魂热烈而自由，不被定义的人生才是你的追求，世界因你而精彩。' };
       } else if (score <= 42) {
-        return { type: 'romantic', icon: '🎭', label: '诗意浪漫者', title: '文艺浪漫的诗意人生', subtitle: '你的人生，像一幅流动的油画', tagline: '浪漫不是幻想，而是将诗情画意融入平凡', keyPoint: '心怀诗意，热爱与美', summary: '你把生活过成了一首诗，在平凡中发现美，在琐碎中创造诗意浪漫。', bgKeyword: 'art,painting' };
+        return { type: 'romantic', icon: '🎭', label: '诗意浪漫者', title: '文艺浪漫的诗意人生', subtitle: '你的人生，像一幅流动的油画', tagline: '浪漫不是幻想，而是将诗情画意融入平凡', keyPoint: '心怀诗意，热爱与美', summary: '你把生活过成了一首诗，在平凡中发现美，在琐碎中创造诗意浪漫。' };
       } else {
-        return { type: 'wise', icon: '💎', label: '清醒智慧者', title: '理性智慧的清醒人生', subtitle: '你的人生，像一潭深邃的湖水', tagline: '智慧是历经风雨后的从容与通透', keyPoint: '清醒笃定，稳中有进', summary: '你活得很清醒，不焦虑不盲从，用智慧经营人生，每一步都走得踏实有力。', bgKeyword: 'minimal,calm' };
+        return { type: 'wise', icon: '💎', label: '清醒智慧者', title: '理性智慧的清醒人生', subtitle: '你的人生，像一潭深邃的湖水', tagline: '智慧是历经风雨后的从容与通透', keyPoint: '清醒笃定，稳中有进', summary: '你活得很清醒，不焦虑不盲从，用智慧经营人生，每一步都走得踏实有力。' };
       }
     }
 
@@ -1562,10 +1562,18 @@
       const styles = cardStyles[currentResult.type];
       currentStyleIndex = Math.floor(Math.random() * styles.length);
 
-      // 设置每种类型的专属背景图（女性主题）
+      // 设置背景图（随机选一张女性主题图片）
       const bgEl = document.getElementById('resultBg');
-      const keywords = currentResult.bgKeyword;
-      bgEl.style.backgroundImage = `url(https://loremflickr.com/800/600/${keywords},woman,girl/all?random=${Date.now()})`;
+      const bgImages = [
+        'img/3ee6c1aefdf64777fe75761fe036558f.jpg',
+        'img/5a17ed105574ea7ee9eef7c9f7951560.jpg',
+        'img/6227e349c2fffc4c6faa953514c4b98b.jpg',
+        'img/6dd7ad6047622387062d75ef07fb441a.jpg',
+        'img/9b2c8d929d96da055e268c86fd81d4aa.jpg',
+        'img/a158e9a419052a9b705a4a655b7e43c5.jpg'
+      ];
+      const randomBg = bgImages[Math.floor(Math.random() * bgImages.length)];
+      bgEl.style.backgroundImage = `url(${randomBg}?t=${Date.now()})`;
 
       document.getElementById('resultIcon').textContent = currentResult.icon;
       document.getElementById('resultTitle').textContent = currentResult.title;
