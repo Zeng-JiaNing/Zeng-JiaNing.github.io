@@ -335,6 +335,12 @@
       color: #f5f0e8;
       line-height: 1.7;
       margin-bottom: 25px;
+      animation: questionIn 0.5s ease forwards;
+    }
+
+    @keyframes questionIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .options {
@@ -352,8 +358,9 @@
       text-align: left;
       font-size: 15px;
       color: #c8c0b5;
-      opacity: 1;
-      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+      opacity: 0;
+      transform: translateX(12px);
+      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.3s, opacity 0.3s;
     }
 
     .option:hover {
@@ -549,10 +556,10 @@
     }
 
     .section-title {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--star-gold);
-      margin-bottom: 10px;
-      font-weight: 600;
+      margin-bottom: 8px;
+      font-weight: 700;
       letter-spacing: 1px;
     }
 
@@ -564,8 +571,8 @@
     }
 
     .section-summary {
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 500;
       color: #e8c87a;
       margin-bottom: 6px;
       letter-spacing: 0.5px;
